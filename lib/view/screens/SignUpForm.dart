@@ -125,7 +125,8 @@ class _SignUpFormState extends State<SignUpForm> {
   void signUp() async {
     try {
       final formState = _formKey.currentState ?? _formKey.currentState;
-      if (formState!.validate()) {
+      if (formState!.validate() &&
+          _confirmPasswordController.text == _passwordController.text) {
         setState(() => _loading = true);
         await context.read<UserProvider>().register(
             password: _passwordController.text,
@@ -203,7 +204,7 @@ class _SignUpFormState extends State<SignUpForm> {
         key: const ValueKey('name'),
         hint: LocaleKeys.name,
         prefixIcon: const Icon(Icons.person),
-        validator: FormBuilderValidators.equalLength(5),
+        validator: validateWordCount,
       ),
     );
   }
@@ -231,7 +232,7 @@ class _SignUpFormState extends State<SignUpForm> {
           key: const ValueKey('password'),
           hint: LocaleKeys.password,
           prefixIcon: const Icon(Icons.lock_outline),
-          validator: FormBuilderValidators.equalLength(5),
+          validator: validateWordCount,
           suffixIcon: IconButton(
             onPressed: () {
               setState(() {
@@ -301,5 +302,17 @@ class _SignUpFormState extends State<SignUpForm> {
                   ),
           )),
     );
+  }
+
+  String? validateWordCount(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter some text';
+    }
+
+    if (value.length < 5) {
+      return 'Please enter at least 5 words';
+    }
+
+    return null; // Return null if the input is valid
   }
 }

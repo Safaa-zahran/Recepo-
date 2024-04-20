@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:posts_app/core/widgets/form_widgets/primary_button/simple_primary_button.dart';
 import 'package:posts_app/view/screens/SignInForm.dart';
@@ -42,6 +41,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               onPressed: logout,
             ),
           ),
+
           const SizedBox(
             height: 80,
           ),
@@ -56,7 +56,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
       final confirmed = await ConfirmationDialog.show(
         context: context,
         title: LocaleKeys.drawerLogout,
-        message: LocaleKeys.logoutConfirmation.tr(),
+        message: LocaleKeys.logoutConfirmation,
       );
 
       if (!confirmed) return;

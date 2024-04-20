@@ -2,14 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:posts_app/core/services/http/apis/miscellaneous_api.dart';
-import 'package:posts_app/model/comments_model.dart';
 
 import '../model/image_model.dart';
 import '../model/products_model.dart';
 
 class ProductsProvider extends ChangeNotifier {
   List<ProductsModel> posts = [];
-  List<CommentsModel> comments = [];
 
   Future<void> getProducts(context) async {
     try {
@@ -20,18 +18,9 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getComments({required int id}) async {
+  Future<void> deleteProduct({required int id, required context}) async {
     try {
-      comments = await MiscellaneousApi.getComments(id: id);
-    } catch (_) {
-      comments = [];
-    }
-    notifyListeners();
-  }
-
-  Future<void> deletePost({required int id, required context}) async {
-    try {
-      await MiscellaneousApi.deletePost(id: id);
+      await MiscellaneousApi.deleteProduct(id: id);
       await getProducts(context);
     } catch (_) {}
     notifyListeners();

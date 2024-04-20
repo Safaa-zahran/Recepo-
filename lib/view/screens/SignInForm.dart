@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:posts_app/core/widgets/form_widgets/ternary_button.dart';
 import 'package:posts_app/core/widgets/loading_widget.dart';
@@ -195,9 +194,21 @@ class _SignInFormState extends State<SignInForm> {
         key: const ValueKey('name'),
         hint: LocaleKeys.name,
         prefixIcon: const Icon(Icons.person),
-        validator: FormBuilderValidators.equalLength(5),
+        validator: validateWordCount,
       ),
     );
+  }
+
+  String? validateWordCount(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter some text';
+    }
+
+    if (value.length < 5) {
+      return 'Please enter at least 5 words';
+    }
+
+    return null; // Return null if the input is valid
   }
 
   Widget passwordFormField() {
@@ -223,7 +234,7 @@ class _SignInFormState extends State<SignInForm> {
           key: const ValueKey('password'),
           hint: LocaleKeys.password,
           prefixIcon: const Icon(Icons.lock_outline),
-          validator: FormBuilderValidators.equalLength(5),
+          validator: validateWordCount,
           suffixIcon: IconButton(
             onPressed: () {
               setState(() {

@@ -1,24 +1,16 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 import '../../../generated/locale_keys.g.dart';
 import '../../../utils/helpers.dart';
 import '../api_client.dart';
-import '../interceptors/api_interceptor.dart';
 import 'exceptions/api_exception.dart';
 
 class UserApi {
-  static Future<Map<String, dynamic>> register({
-    required password,
-    required userName
-  }) async {
+  static Future<Map<String, dynamic>> register(
+      {required password, required userName}) async {
     try {
-      final response = await ApiClient.instance.dio.post('api/auth/register', data: {
-        "username": userName,
-        "password": password
-      });
+      final response = await ApiClient.instance.dio.post('api/auth/register',
+          data: {"username": userName, "password": password});
 
       return response.data;
     } on DioError catch (error) {
@@ -33,7 +25,7 @@ class UserApi {
     } on ApiException catch (_) {
       rethrow;
     } catch (error) {
-      throw LocaleKeys.genericErrorMessage.tr();
+      throw LocaleKeys.genericErrorMessage;
     }
   }
 
@@ -42,10 +34,8 @@ class UserApi {
     required String? userName,
   }) async {
     try {
-      final response = await ApiClient.instance.dio.post('api/auth/login', data: {
-        "username": userName,
-        "password": password
-      });
+      final response = await ApiClient.instance.dio.post('api/auth/login',
+          data: {"username": userName, "password": password});
 
       return response.data;
     } on DioError catch (error) {
@@ -60,7 +50,7 @@ class UserApi {
     } on ApiException catch (_) {
       rethrow;
     } catch (error) {
-      throw LocaleKeys.genericErrorMessage.tr();
+      throw LocaleKeys.genericErrorMessage;
     }
   }
 }

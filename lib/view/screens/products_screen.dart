@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:posts_app/controller/products_provider.dart';
 import 'package:posts_app/view/screens/loca_widgets/custom_drawer.dart';
@@ -34,7 +33,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
       showSnackbar(
         context: context,
         status: SnackbarStatus.info,
-        message: LocaleKeys.doubleBackToExit.tr(),
+        message: LocaleKeys.doubleBackToExit,
       );
       _backButtonTimestamp = DateTime.now();
       return false;
@@ -177,7 +176,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
       if (!confirmed) return;
       await context
           .read<ProductsProvider>()
-          .deletePost(id: id, context: context)
+          .deleteProduct(id: id, context: context)
           .then((value) {
         showSnackbar(
           context: context,
